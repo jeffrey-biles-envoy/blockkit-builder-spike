@@ -1,5 +1,7 @@
+import _ from 'lodash'
 import Head from 'next/head'
 import { useState } from 'react'
+import Editor from "../components/Editor"
 
 export default function Home() {
   const [exampleJSON, editExampleJSON] = useState([
@@ -43,6 +45,14 @@ export default function Home() {
     editExampleJSON([...exampleJSON, {type: 'button', text: 'I added a button'}])
   }
 
+  const onEditorUpdate = function(editorState) {
+    const editorText = JSON.parse(editorState.state.doc.text.join('\n'))
+    console.log(editorText, exampleJSON)
+    if(!_.isEqual(editorText, exampleJSON)) {
+      editExampleJSON(editorText)
+    }
+  }
+
   return (
     <div className="container">
 
@@ -55,6 +65,9 @@ export default function Home() {
           </div>
           <div className="preview">
             {exampleJSON.map(c => renderComponent(c))}
+          </div>
+          <div className="editor">
+            <Editor value={exampleJSON} onUpdate={onEditorUpdate} />
           </div>
         </div>
       </main>
@@ -125,7 +138,7 @@ export default function Home() {
           justify-content: center;
           flex-wrap: wrap;
 
-          max-width: 800px;
+          width: 1020px;
           margin-top: 3rem;
         }
 
@@ -138,7 +151,11 @@ export default function Home() {
         }
 
         .preview {
-          flex-grow: 4;
+          width: 400px;
+        }
+
+        .editor {
+          width: 500px;
         }
 
         @media (max-width: 600px) {
