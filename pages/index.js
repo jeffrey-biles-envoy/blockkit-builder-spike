@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import Head from 'next/head'
 import { useState } from 'react'
-import Editor from "../components/Editor"
+import CodeMirror from '@uiw/react-codemirror';
 
 export default function Home() {
   const [exampleJSON, editExampleJSON] = useState([
@@ -67,7 +67,12 @@ export default function Home() {
             {exampleJSON.map(c => renderComponent(c))}
           </div>
           <div className="editor">
-            <Editor value={exampleJSON} onUpdate={onEditorUpdate} />
+            <CodeMirror
+              value={JSON.stringify(exampleJSON, null, 2)}
+              onChange={(value, viewUpdate) => {
+                editExampleJSON(JSON.parse(value))
+              }}
+            />
           </div>
         </div>
       </main>
