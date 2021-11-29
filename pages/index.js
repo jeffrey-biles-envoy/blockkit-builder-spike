@@ -7,11 +7,12 @@ export default function Home() {
   const [exampleJSON, editExampleJSON] = useState([
     {
       type: 'button',
-      text: "It's my button"
+      text: "It's my button",
+      colorSchema: 'primary'
     },
     {
       type: 'text',
-      text: "I can make text"
+      text: "I can make text",
     },
     {
       type: 'header',
@@ -22,7 +23,7 @@ export default function Home() {
   const renderComponent = function(c) {
     if(c.type == 'button') {
       return (
-        <button>{c.text}</button>
+        <button className={`color-scheme-${c.colorSchema || 'primary'}`}>{c.text}</button>
       )
     } else if(c.type == 'text') {
       return (
@@ -42,7 +43,7 @@ export default function Home() {
     editExampleJSON([...exampleJSON, {type: 'header', text: 'I added a header'}])
   }
   const addButton = function(){
-    editExampleJSON([...exampleJSON, {type: 'button', text: 'I added a button'}])
+    editExampleJSON([...exampleJSON, {type: 'button', text: 'I added a button', colorSchema: 'primary'}])
   }
 
   const onEditorUpdate = function(editorState) {
@@ -142,6 +143,14 @@ export default function Home() {
           cursor: pointer;
           padding: 8px;
           margin-top: 8px;
+        }
+
+        button.color-scheme-primary {
+          background-color: orange;
+        }
+        button.color-scheme-dark {
+          background-color: purple;
+          color: white;
         }
       `}</style>
     </div>
