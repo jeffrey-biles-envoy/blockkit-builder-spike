@@ -148,7 +148,7 @@ export default function Home() {
         button.color-scheme-primary {
           background-color: orange;
         }
-        button.color-scheme-dark {
+        button.color-scheme-secondary {
           background-color: purple;
           color: white;
         }
